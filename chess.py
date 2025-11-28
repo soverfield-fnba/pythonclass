@@ -1,5 +1,5 @@
 import chess
-import chess.engine
+import chessengine
 import chess.pgn
 import os
 import time
@@ -91,7 +91,7 @@ def play_chess_vs_human():
 def play_chess_vs_computer(difficulty_seconds=1.0):
     board = chess.Board()
     try:
-        engine = chess.engine.SimpleEngine.popen_uci(ENGINE_PATH)
+        engine = chessengine.SimpleEngine.popen_uci(ENGINE_PATH)
         engine.configure({"Skill Level": 10})  # 0-20, or adjust as needed
     except:
         print("Stockfish not found. Falling back to random legal moves.")
@@ -116,10 +116,10 @@ def play_chess_vs_computer(difficulty_seconds=1.0):
         else:
             print(f"Computer is thinking... ({difficulty_seconds}s)")
             if engine:
-                result = engine.play(board, chess.engine.Limit(time=difficulty_seconds))
+                result = engine.play(board, chessengine.Limit(time=difficulty_seconds))
                 move = result.move
             else:
-                move = chess.engine.play_random(board).move
+                move = chessengine.play_random(board).move
             
             print(f"Computer plays: {board.san(move)}")
             board.push(move)
